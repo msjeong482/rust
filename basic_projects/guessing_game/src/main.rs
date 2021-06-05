@@ -2,6 +2,26 @@ use std::io;
 use std::cmp::Ordering;
 use rand::Rng;
 
+pub struct Guess {
+    value: u32
+}
+
+impl Guess {
+    pub fn new(value: u32) -> Guess {
+        if value < 1 || value > 100 {
+            panic!("guessing value is between 1 ~ 100, current guessing value:{}", value);
+        }
+
+        Guess {
+            value
+        }
+    }
+
+    pub fn value(&self) -> u32 {
+        self.value
+    }
+}
+
 fn main() {
     println!("숫자를 맞혀봅시다");
 
@@ -16,7 +36,10 @@ fn main() {
             .expect("입력한 값을 읽지 못했습니다.");
 
         let guess: u32 = match guess.trim().parse() {
-            Ok(num) => num,
+            Ok(num) => {
+                let guess = Guess::new(num);
+                guess.value()
+            }
             Err(_) => continue,
         };
 
