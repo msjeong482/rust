@@ -8,7 +8,7 @@ fn main() {
         panic!("the count of args is too small.. it must be greater than 3.");
     }
 
-    let config = parse_config(&args);
+    let config = Config::new(&args);
 
     let contents = fs::read_to_string(config.filename)
         .expect("can not read a file.");
@@ -21,9 +21,11 @@ struct Config {
     filename: String,
 }
 
-fn parse_config(args: &[String]) -> Config {
-    let query = args[1].clone();
-    let filename = args[2].clone();
+impl Config {
+    fn new(args: &[String]) -> Config {
+        let query = args[1].clone();
+        let filename = args[2].clone();
 
-    Config { query, filename }
+        Config { query, filename }
+    }
 }
